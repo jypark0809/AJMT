@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:text="방문 목적을 선택해주세요"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView">
+
+            <ToggleButton
+                android:id="@+id/toggle_btn13"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:background="@drawable/selector_btn_13"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintEnd_toStartOf="@+id/toggle_btn14"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="공부"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/toggle_btn13"
+                app:layout_constraintStart_toStartOf="@+id/toggle_btn13"
+                app:layout_constraintTop_toBottomOf="@id/toggle_btn13" />
+
+            <ToggleButton
+                android:id="@+id/toggle_btn14"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:background="@drawable/selector_btn_14"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintEnd_toStartOf="@+id/toggle_btn15"
+                app:layout_constraintStart_toEndOf="@id/toggle_btn13"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="팀플"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/toggle_btn14"
+                app:layout_constraintStart_toStartOf="@+id/toggle_btn14"
+                app:layout_constraintTop_toBottomOf="@id/toggle_btn14" />
+
+            <ToggleButton
+                android:id="@+id/toggle_btn15"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:background="@drawable/selector_btn_15"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintEnd_toStartOf="@+id/toggle_btn16"
+                app:layout_constraintStart_toEndOf="@id/toggle_btn14"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="감성"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/toggle_btn15"
+                app:layout_constraintStart_toStartOf="@+id/toggle_btn15"
+                app:layout_constraintTop_toBottomOf="@id/toggle_btn15" />
+
+            <ToggleButton
+                android:id="@+id/toggle_btn16"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:background="@drawable/selector_btn_16"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/toggle_btn15"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="상관없음"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/toggle_btn16"
+                app:layout_constraintStart_toStartOf="@+id/toggle_btn16"
+                app:layout_constraintTop_toBottomOf="@id/toggle_btn16" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="16dp"
+            android:background="#CACACA"
+            app:layout_constraintTop_toBottomOf="@id/view" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:text="콘센트가 필요하신가요?"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView2">
+
+            <ToggleButton
+                android:id="@+id/toggle_btn17"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:background="@drawable/selector_btn_17"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintEnd_toStartOf="@+id/toggle_btn18"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="테이블마다\n콘센트"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="@+id/toggle_btn17"
+                app:layout_constraintStart_toStartOf="@+id/toggle_btn17"
+                app:layout_constraintTop_toBottomOf="@id/toggle_btn17" />
+
+            <ToggleButton
+                android:id="@+id/toggle_btn18"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:background="@drawable/selector_btn_18"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintEnd_toStartOf="@+id/toggle_btn19"
+                app:layout_constraintStart_toEndOf="@id/toggle_btn17"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="테이블 일부\n콘센트"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="@+id/toggle_btn18"
+                app:layout_constraintStart_toStartOf="@+id/toggle_btn18"
+                app:layout_constraintTop_toBottomOf="@id/toggle_btn18" />
+
+            <ToggleButton
+                android:id="@+id/toggle_btn19"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:background="@drawable/selector_btn_19"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintEnd_toStartOf="@+id/toggle_btn20"
+                app:layout_constraintStart_toEndOf="@id/toggle_btn18"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="콘센트\n없음"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="@+id/toggle_btn19"
+                app:layout_constraintStart_toStartOf="@+id/toggle_btn19"
+                app:layout_constraintTop_toBottomOf="@id/toggle_btn19" />
+
+            <ToggleButton
+                android:id="@+id/toggle_btn20"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:background="@drawable/selector_btn_16"
+                android:textOff=""
+                android:textOn=""
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/toggle_btn19"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="상관없음"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/toggle_btn20"
+                app:layout_constraintStart_toStartOf="@+id/toggle_btn20"
+                app:layout_constraintTop_toBottomOf="@id/toggle_btn20" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="16dp"
+            android:background="#CACACA"
+            app:layout_constraintTop_toBottomOf="@id/view2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout2">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:text="1인 평균 금액을 설정하세요"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/gmarketsans_medium"
+            android:text="(아메리카노 1잔 기준)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/price_bar"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

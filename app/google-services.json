@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "602755976610",
+    "firebase_url": "https://ajoueatplace.firebaseio.com",
+    "project_id": "ajoueatplace",
+    "storage_bucket": "ajoueatplace.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602755976610:android:d56f06ee9b09e0ac0236fb",
+        "android_client_info": {
+          "package_name": "com.example.ajourestaurant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602755976610-fc5799snqofsg0kojt8m9b8cngenikhr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBk4mVkjpOxJMtWI_KO8erBF45tiO5Gjg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602755976610-fc5799snqofsg0kojt8m9b8cngenikhr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

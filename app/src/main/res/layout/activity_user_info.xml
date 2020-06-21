@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="200dp"
+                android:src="@drawable/user_info"
+                app:layout_constraintStart_toStartOf="@+id/iv_save_info"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="더 디테일한 빅데이터 수집을 위해\n3가지 정보만 입력해주세요 :)"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+            <TextView
+                android:id="@+id/tv_nickName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:text="닉네임"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@+id/iv_save_info"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <EditText
+                android:id="@+id/et_nickName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="입력하기"
+                android:maxLength="12"
+                app:layout_constraintEnd_toEndOf="@+id/iv_save_info"
+                app:layout_constraintStart_toStartOf="@+id/iv_save_info"
+                app:layout_constraintTop_toBottomOf="@+id/tv_nickName"
+                app:layout_constraintWidth_percent="0.7" />
+
+            <TextView
+                android:id="@+id/tv_major"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:text="학과"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@+id/iv_save_info"
+                app:layout_constraintTop_toBottomOf="@+id/et_nickName" />
+
+            <Spinner
+                android:id="@+id/spinner_major"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/tv_major"
+                app:layout_constraintTop_toBottomOf="@+id/tv_major"
+                app:layout_constraintWidth_percent="0.7"
+                android:entries="@array/department"/>
+
+            <TextView
+                android:id="@+id/tv_studentID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:text="학번"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@+id/spinner_studentID"
+                app:layout_constraintTop_toBottomOf="@+id/et_nickName" />
+
+            <Spinner
+                android:id="@+id/spinner_studentID"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:entries="@array/studentID"
+                app:layout_constraintEnd_toEndOf="@+id/iv_save_info"
+                app:layout_constraintTop_toBottomOf="@+id/tv_studentID"
+                app:layout_constraintWidth_percent="0.7" />
+
+            <TextView
+                android:id="@+id/tv_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/gmarketsans_medium"
+                android:text="성별"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="@+id/iv_save_info"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_studentID" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup_sex"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/iv_save_info"
+                app:layout_constraintStart_toStartOf="@+id/iv_save_info"
+                app:layout_constraintTop_toBottomOf="@+id/tv_sex">
+
+                <RadioButton
+                    android:id="@+id/rg_btn_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:button="@drawable/userinfo_male"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/rg_btn_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/userinfo_female" />
+
+            </RadioGroup>
+
+            <ImageView
+                android:id="@+id/iv_save_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="300dp"
+                android:src="@drawable/start_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup_sex" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
