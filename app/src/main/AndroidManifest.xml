@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <meta-data android:name="com.kakao.sdk.AppKey"
-            android:value="0621eaad273e228069183a4560903ab0"/>
+            android:value="7342a2414933c8f4a4755759563710f8"/>
 
         <activity android:name=".SearchResultActivity">
         </activity>
