@@ -6,7 +6,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,25 +13,17 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ajourestaurant.Database.Restaurant;
-import com.example.ajourestaurant.Database.User;
-import com.example.ajourestaurant.adapter.ListViewAdapter;
 import com.example.ajourestaurant.adapter.RestaurantAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -46,23 +37,15 @@ import net.daum.mf.map.api.MapView;
 import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapPoint;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapReverseGeoCoder.ReverseGeoCodingResultListener {
 
     private FirebaseAuth mAuth; // Declare Firebase Auth
-    private ImageView mDrawerProfile;
     private boolean btn1_key, btn2_key, btn3_key, btn4_key, btn5_key, btn6_key, btn7_key, btn8_key, btn9_key, btn10_key, btn11_key, btn12_key;
     private DatabaseReference mRestaurantReference;
-    private DatabaseReference mUserReference;
-    private DrawerLayout drawerLayout;
-    private View drawerView;
     private MapView mMapView;
+    ViewGroup mapViewContainer;
     private GPSTracker gpsTracker;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
@@ -74,11 +57,8 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
     private ArrayList<Restaurant> restaurantsList;
 
     private Spinner mSpinner;
-    private CustomDialog customDialog;
-    private ImageView btn_dialog;
     private ImageView mSearch;
-    private TextView mDrawerNickname;
-    private TextView mDrawerEmail;
+    private ImageView mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,24 +78,19 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         btn12_key = getIntent().getBooleanExtra("btn12", true);
 
         gpsTracker = new GPSTracker(MainActivity.this);
-        //timePicker = (TimePicker)findViewById(R.id.timePicker);
-        mDrawerNickname = (TextView)findViewById(R.id.mDrawerNickname);
-        mDrawerEmail = (TextView)findViewById(R.id.mDrawerEmail);
-        mSearch = (ImageView)findViewById(R.id.mSearch);
-        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        drawerView = (View)findViewById(R.id.drawer);
-        ImageView btn_open_drawer = (ImageView) findViewById(R.id.btn_open_drawer);
-        btn_open_drawer.setOnClickListener(new View.OnClickListener() {
+
+        // 메뉴 버튼
+        mMenu = (ImageView)findViewById(R.id.mMyInfo);
+        mMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(drawerView);
+                Intent intent = new Intent(getApplicationContext(), MyInfoActivity.class);
+                startActivity(intent);
             }
         });
-        mDrawerProfile = (ImageView)findViewById(R.id.mDrawerProfile);
-        mDrawerProfile.setBackground(new ShapeDrawable(new OvalShape()));
-        mDrawerProfile.setClipToOutline(true);
 
-
+        // 검색 기능
+        mSearch = (ImageView)findViewById(R.id.mSearch);
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,33 +99,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
             }
         });
 
-        //Drawer Layout 내부 이벤트 구현
-        ListView listview ;
-        ListViewAdapter drawerAdapter;
-        // Adapter 생성
-        drawerAdapter = new ListViewAdapter() ;
-
-        // 리스트뷰 참조 및 Adapter달기
-        listview = (ListView) findViewById(R.id.listView_drawer);
-        listview.setAdapter(drawerAdapter);
-        drawerAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_baseline_account_circle_20),"회원 정보");
-        drawerAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_baseline_help_outline_20),"도움말");
-        drawerAdapter.addItem(ContextCompat.getDrawable(this, R.drawable.ic_logout_black_20dp),"로그아웃");
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        return;
-                    case 1:
-                        return;
-                    case 2:
-                        signOut();
-                        break;
-                }
-            }
-        });
-
+        // 정렬기능 (Spinner : 거리순, 아주대 정문 순, 별점 순)
         mSpinner = (Spinner)findViewById(R.id.spinner_filtering);
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -176,55 +125,14 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                // 아무것도 선택되지 않았을 때
             }
         });
 
-        long now = System.currentTimeMillis();
-        Date mdate = new Date(now);
-        SimpleDateFormat simpleDate = new SimpleDateFormat("aa hh:mm");
-        String getTime = simpleDate.format(mdate);
-        TextView tv_now = (TextView)findViewById(R.id.tv_now);
-        tv_now.setText(getTime);
-
-
-        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics(); //디바이스 화면크기를 구하기위해
-        int width = dm.widthPixels; //디바이스 화면 너비
-        int height = dm.heightPixels; //디바이스 화면 높이
-
-        btn_dialog = (ImageView)findViewById(R.id.iv_dialog);
-        customDialog = new CustomDialog(this);
-        customDialog.btn_apply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //timeFiltering(restaurantsList);
-                //adapter.notifyDataSetChanged();
-                customDialog.dismiss();
-            }
-        });
-        customDialog.btn_defalt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customDialog.dismiss();
-            }
-        });
-
-        WindowManager.LayoutParams wm = customDialog.getWindow().getAttributes();
-        wm.copyFrom(customDialog.getWindow().getAttributes());
-        wm.width = (int)(width / (1.2));
-        wm.height = (int)(height / (1.78));
-        btn_dialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customDialog.show();
-            }
-        });
-
-        mUserReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        mRestaurantReference = FirebaseDatabase.getInstance().getReference().child("Restaurants");
-
-        //다음이 제공하는 MapView객체 생성 및 API Key 설정
-        mMapView = (MapView) findViewById(R.id.map_view);
+        //다음이 제공하는 MapView 객체 생성 및 API Key 설정
+        mMapView = new MapView(this);
+        mapViewContainer = (ViewGroup)findViewById(R.id.map_view);
+        mapViewContainer.addView(mMapView);
         mMapView.setCurrentLocationEventListener(this);
         mMapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.279712,127.043695), true);
         mMapView.setZoomLevel(0, true);
@@ -237,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         }
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        //recyclerView.addItemDecoration(new DividerItemDecoration(drawerView.getContext(),1));     //구분선 추가
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -271,24 +180,6 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
                             break;
                         }
                     }
-
-                    /*
-                    MapPOIItem marker = new MapPOIItem();
-                    MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(restaurant.getLatitude(),restaurant.getLongitude());
-                    marker.setItemName(restaurant.getName());
-                    marker.setTag(0);
-                    marker.setMapPoint(mapPoint);
-                    marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커타입을 커스텀 마커로 지정.
-                    marker.setCustomImageResourceId(R.drawable.img_marker_off); // 마커 이미지.
-                    marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
-                    marker.setCustomSelectedImageResourceId(R.drawable.img_marker_on); // 마커를 클릭했을때
-                    marker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
-                    marker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
-                    // marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-                    mMapView.addPOIItem(marker);
-
-                     */
-
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -302,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         adapter = new RestaurantAdapter(restaurantsList, this);
         recyclerView.setAdapter(adapter);
 
+        // Floating Button 구현
         ImageView iv_filtering = (ImageView)findViewById(R.id.fb_filtering);
         iv_filtering.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -310,35 +202,8 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
                 startActivity(intent);
             }
         });
-
-
-
-        /*Floating Button 구현
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new FABClickListener());
-         */
-
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        ValueEventListener userLinstener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                mDrawerNickname.setText(user.getNickname());
-                mDrawerEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-        mUserReference.addValueEventListener(userLinstener);
-    }
 
     @Override
     protected void onDestroy() {
@@ -410,6 +275,8 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         }
     }
 
+
+
     void checkRunTimePermission(){
         //런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
@@ -464,6 +331,7 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         builder.create().show();
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -491,32 +359,21 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    /*Floating Button 클릭 이벤트 처리
-    class FABClickListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-            // FAB Click 이벤트 처리 구간
-            Intent intent = new Intent(getApplicationContext(), FilteringActivity.class);
-            startActivity(intent);
-        }
-    }
-     */
-
     private ArrayList<Restaurant> selectionSortByRating(ArrayList<Restaurant> arrayList) {
         int size = arrayList.size();
-        Restaurant minPrice;
-        int min;
+        Restaurant maxRating;
+        int max = 10;
 
         for(int i=0; i<size-1; i++) {
-            minPrice = arrayList.get(i);
-            min = i;
+            maxRating = arrayList.get(i);
+            max = i;
             for (int j = i+1; j < size; j++) {
-                if(arrayList.get(j).getRating() < minPrice.getRating()) {
-                    minPrice = arrayList.get(j);
-                    min = j;
+                if(arrayList.get(j).getRating() > maxRating.getRating()) {
+                    maxRating = arrayList.get(j);
+                    max = j;
                 }
             }
-            swap(arrayList, min, i);
+            swap(arrayList, max, i);
         }
         return  arrayList;
     }
@@ -579,52 +436,4 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         double y = (restaurant.getLongitude() - myLongitude);
         return Math.sqrt(x*x + y*y);
     }
-
-    /*
-    private ArrayList<Restaurant> timeFiltering(ArrayList<Restaurant> arrayList) {
-        for(int i = 0; i<arrayList.size(); i++) {
-            if(!isOpen(arrayList.get(i))) {
-                arrayList.remove(i);
-            }
-        }
-        return arrayList;
-    }
-
-    private Boolean isOpen(Restaurant restaurant) {
-        boolean isOpen;
-        int pickerHour = customDialog.timePicker.getHour();
-        int pickerMinute = customDialog.timePicker.getMinute();
-        int pickerSecond = 0;
-        int pickerTime = (pickerHour*60*60) + (pickerMinute*60) + pickerSecond;
-        String open_time = restaurant.getOpen(); // open_time을 데이터베이스에서 받아옴
-        String[] splitOpenHourAndMin = open_time.split(":"); // ":"를 기준으로 Hour과 Minitue을 나눔
-        String close_time = restaurant.getClose(); // close_time을 데이터베이스에서 받아옴
-        String[] splitCloseHourAndMin = close_time.split(":"); //":"를 기준으로 Hour과 Minitue을 나눔
-        int openTime = (Integer.parseInt(splitOpenHourAndMin[0])*60*60) + Integer.parseInt(splitOpenHourAndMin[1])*60;
-        int closeTime = (Integer.parseInt(splitCloseHourAndMin[0])*60*60) + Integer.parseInt(splitCloseHourAndMin[1])*60;
-        if(closeTime>86400) { // 마감시간이 24:00보다 늦게 끝난다면
-            if(closeTime <= pickerTime && pickerTime <= openTime) {
-                isOpen = false;
-            } else {
-                isOpen = true;
-            }
-        } else {
-            if(openTime <= pickerTime && pickerTime <= closeTime) {
-                isOpen = true;
-            } else {
-                isOpen = false;
-            }
-        }
-        return isOpen;
-    }
-     */
-
-    //Sign out
-    private void signOut() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
 }

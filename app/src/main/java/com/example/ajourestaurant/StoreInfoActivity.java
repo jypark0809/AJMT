@@ -2,6 +2,7 @@ package com.example.ajourestaurant;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -21,6 +22,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
 
 import java.util.ArrayList;
 
@@ -67,6 +71,8 @@ public class StoreInfoActivity extends AppCompatActivity {
         tv_address = (TextView)findViewById(R.id.tv_address);
         iv_back = (ImageView)findViewById(R.id.iv_back2);
 
+
+        // 뒤로가기
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,4 +146,5 @@ public class StoreInfoActivity extends AppCompatActivity {
         };
         mRestaurantReference.addValueEventListener(restaurantListener);
     }
+
 }

@@ -6,6 +6,11 @@ public class ListViewItem {
     private Drawable iconDrawable;
     private String titleStr;
 
+    public ListViewItem(String titleStr, Drawable iconDrawable) {
+        this.iconDrawable = iconDrawable;
+        this.titleStr = titleStr;
+    }
+
     public Drawable getIcon() {
         return iconDrawable;
     }

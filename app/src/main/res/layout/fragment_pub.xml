@@ -245,7 +245,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
+    <!--<View
         android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="2dp"
@@ -297,6 +297,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

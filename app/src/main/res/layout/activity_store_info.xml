@@ -52,10 +52,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_bar"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -65,8 +65,8 @@
                 android:id="@+id/imageView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_sample1"
                 android:adjustViewBounds="true"
+                android:src="@drawable/img_sample1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -76,10 +76,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Store name"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
@@ -121,9 +121,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="영업시간"
-                android:textStyle="bold"
                 android:textColor="#AA00DA6F"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_clock"
                 app:layout_constraintStart_toEndOf="@id/iv_clock"
                 app:layout_constraintTop_toTopOf="@id/iv_clock" />
@@ -176,9 +176,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="대표 메뉴"
-                android:textStyle="bold"
                 android:textColor="#AA00DA6F"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_won"
                 app:layout_constraintStart_toEndOf="@id/iv_won"
                 app:layout_constraintTop_toTopOf="@id/iv_won" />
@@ -253,36 +253,13 @@
                 app:layout_constraintStart_toEndOf="@id/iv_phone"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-            <ImageView
-                android:id="@+id/iv_copy_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:adjustViewBounds="true"
-                android:maxWidth="48dp"
-                android:src="@drawable/img_copy"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView10" />
-
-            <ImageView
-                android:id="@+id/iv_map"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/sample2"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_copy_address" />
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="잘못된 정보 신고하기"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_map" />
+            <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#E3E3E3"
+            app:layout_constraintTop_toBottomOf="@id/tv_address" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

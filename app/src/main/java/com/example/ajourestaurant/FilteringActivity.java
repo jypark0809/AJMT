@@ -38,6 +38,7 @@ public class FilteringActivity extends AppCompatActivity {
         iv_reset = (ImageView)findViewById(R.id.iv_reset);
         iv_filtering = (ImageView)findViewById(R.id.iv_filtering) ;
 
+        // 뒤로 가기
         iv_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

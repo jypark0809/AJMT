@@ -2,6 +2,7 @@ package com.example.ajourestaurant.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,6 +92,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
             holder.tv_tilde.setTextColor(0xAA00DA6F);
         } else {
             holder.iv_isOpen.setImageResource(R.drawable.img_close);
+            holder.tv_open_time.setTextColor(0xFF979797);
+            holder.tv_close_time.setTextColor(0xFF979797);
+            holder.tv_tilde.setTextColor(0xFF979797);
         }
         holder.tv_name.setText(restaurantsList.get(position).getName());
         holder.tv_type.setText(restaurantsList.get(position).getType());
