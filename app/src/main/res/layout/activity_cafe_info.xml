@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iv_back2"
+            android:id="@+id/iv_back3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_store_name1"
+            android:id="@+id/tv_cafe_name1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Store name"
@@ -72,7 +72,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_store_name2"
+                android:id="@+id/tv_cafe_name2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -89,21 +89,21 @@
                 android:layout_height="20dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/img_star"
-                app:layout_constraintBottom_toBottomOf="@id/tv_store_name2"
-                app:layout_constraintEnd_toStartOf="@+id/tv_rating"
-                app:layout_constraintTop_toTopOf="@+id/tv_store_name2" />
+                app:layout_constraintBottom_toBottomOf="@id/tv_cafe_name2"
+                app:layout_constraintEnd_toStartOf="@+id/tv_rating_cafe"
+                app:layout_constraintTop_toTopOf="@+id/tv_cafe_name2" />
 
             <TextView
-                android:id="@+id/tv_rating"
+                android:id="@+id/tv_rating_cafe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="rating"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_store_name2"
+                app:layout_constraintBottom_toBottomOf="@id/tv_cafe_name2"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_store_name2" />
+                app:layout_constraintTop_toTopOf="@+id/tv_cafe_name2" />
 
             <ImageView
                 android:id="@+id/iv_clock"
@@ -113,7 +113,7 @@
                 android:layout_marginTop="16dp"
                 android:src="@drawable/img_clock"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_store_name2" />
+                app:layout_constraintTop_toBottomOf="@id/tv_cafe_name2" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -129,7 +129,7 @@
                 app:layout_constraintTop_toTopOf="@id/iv_clock" />
 
             <TextView
-                android:id="@+id/tv_open_time"
+                android:id="@+id/tv_open_time_cafe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -140,24 +140,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
             <TextView
-                android:id="@+id/tv_tilde"
+                android:id="@+id/tv_tilde_cafe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="~"
                 android:textColor="@color/black"
-                app:layout_constraintStart_toEndOf="@id/tv_open_time"
+                app:layout_constraintStart_toEndOf="@id/tv_open_time_cafe"
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
             <TextView
-                android:id="@+id/tv_close_time"
+                android:id="@+id/tv_close_time_cafe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="close"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@id/tv_tilde"
+                app:layout_constraintStart_toEndOf="@id/tv_tilde_cafe"
                 app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
             <ImageView
@@ -168,7 +168,7 @@
                 android:layout_marginTop="16dp"
                 android:src="@drawable/img_won"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_open_time" />
+                app:layout_constraintTop_toBottomOf="@id/tv_open_time_cafe" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -184,7 +184,7 @@
                 app:layout_constraintTop_toTopOf="@id/iv_won" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_menu"
+                android:id="@+id/recyclerView_menu_cafe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -199,7 +199,7 @@
                 android:layout_marginTop="16dp"
                 android:src="@drawable/img_tel"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recyclerView_menu" />
+                app:layout_constraintTop_toBottomOf="@id/recyclerView_menu_cafe" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -214,7 +214,7 @@
                 app:layout_constraintTop_toTopOf="@id/iv_phone" />
 
             <TextView
-                android:id="@+id/tv_tel_number"
+                android:id="@+id/tv_tel_number_cafe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -230,7 +230,7 @@
                 android:layout_marginTop="16dp"
                 android:src="@drawable/img_address"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_tel_number" />
+                app:layout_constraintTop_toBottomOf="@id/tv_tel_number_cafe" />
 
             <TextView
                 android:id="@+id/textView10"
@@ -245,7 +245,7 @@
                 app:layout_constraintTop_toTopOf="@id/iv_address" />
 
             <TextView
-                android:id="@+id/tv_address"
+                android:id="@+id/tv_address_cafe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -259,7 +259,7 @@
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
             android:background="#E3E3E3"
-            app:layout_constraintTop_toBottomOf="@id/tv_address" />
+            app:layout_constraintTop_toBottomOf="@id/tv_address_cafe" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

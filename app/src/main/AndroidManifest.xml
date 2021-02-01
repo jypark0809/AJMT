@@ -22,6 +22,7 @@
         <activity android:name=".SearchActivity"></activity>
         <activity android:name=".KakaoHashActivity"></activity>
         <activity android:name=".StoreInfoActivity"></activity>
+        <activity android:name=".CafeInfoActivity"></activity>
         <activity android:name=".UserInfoActivity"></activity>
         <activity android:name=".FilteringActivity"></activity>
         <activity android:name=".SignInActivity">

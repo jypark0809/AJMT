@@ -64,10 +64,13 @@ public class MyInfoActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), UserInfoActivity.class);
                         startActivity(intent);
                         finish();
+                        break;
                     case 1:
                         Toast.makeText(getApplicationContext(),"It's not implemented yet.", Toast.LENGTH_SHORT).show();
+                        break;
                     case 2:
                         signOut();
+                        break;
                 }
             }
         });

@@ -1,18 +1,15 @@
 package com.example.ajourestaurant.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.ajourestaurant.FilteringActivity;
 import com.example.ajourestaurant.R;
 
 public class Fragment_Restaurant extends Fragment {
@@ -50,12 +47,23 @@ public class Fragment_Restaurant extends Fragment {
         btn11 = (ToggleButton)view.findViewById(R.id.toggle_btn11);
         btn12 = (ToggleButton)view.findViewById(R.id.toggle_btn12);
 
+
+        /*btn1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(btn2.isChecked()) {
+                    btn2.setChecked(false);
+                    btn1.setChecked(true);
+                }
+            }
+        });
+
         btn2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 btn1.setChecked(false);
             }
-        });
+        });*/
 
 
         return view;

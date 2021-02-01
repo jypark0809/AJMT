@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ajourestaurant.Database.Restaurant;
+import com.example.ajourestaurant.adapter.CafeAdapter;
 import com.example.ajourestaurant.adapter.RestaurantAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,7 +45,10 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
 
     private FirebaseAuth mAuth; // Declare Firebase Auth
     private boolean btn1_key, btn2_key, btn3_key, btn4_key, btn5_key, btn6_key, btn7_key, btn8_key, btn9_key, btn10_key, btn11_key, btn12_key;
+    private int filteringType;
     private DatabaseReference mRestaurantReference;
+    private DatabaseReference mCafeReference;
+    private DatabaseReference mPubReference;
     private MapView mMapView;
     ViewGroup mapViewContainer;
     private GPSTracker gpsTracker;
@@ -65,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 초기화
+        btn1_key = getIntent().getBooleanExtra("btn1", true);
         btn2_key = getIntent().getBooleanExtra("btn2", true);
         btn3_key = getIntent().getBooleanExtra("btn3", true);
         btn4_key = getIntent().getBooleanExtra("btn4", true);
@@ -76,8 +83,20 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         btn10_key = getIntent().getBooleanExtra("btn10", true);
         btn11_key = getIntent().getBooleanExtra("btn11", true);
         btn12_key = getIntent().getBooleanExtra("btn12", true);
+        filteringType = getIntent().getIntExtra("filteringType",0);
 
         gpsTracker = new GPSTracker(MainActivity.this);
+
+        // Floating Button 구현
+        ImageView iv_filtering = (ImageView)findViewById(R.id.fb_filtering);
+        iv_filtering.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FilteringActivity.class);
+                intent.putExtra("filteringType",filteringType);
+                startActivity(intent);
+            }
+        });
 
         // 메뉴 버튼
         mMenu = (ImageView)findViewById(R.id.mMyInfo);
@@ -151,18 +170,62 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
         recyclerView.setLayoutManager(layoutManager);
         restaurantsList = new ArrayList<>();
 
-        final String[] filterCategory = {"한식", "분식", "일식", "중국집", "양식", "치킨", "피자", "야식", "찜/탕", "패스트푸드", "세계음식"};
-        final Boolean[] btnIsChecked = {btn2_key, btn3_key, btn4_key, btn5_key, btn6_key ,btn7_key, btn8_key, btn9_key, btn10_key, btn11_key, btn12_key};
-        mRestaurantReference = FirebaseDatabase.getInstance().getReference("Restaurants");
-        mRestaurantReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                restaurantsList.clear(); //초기화
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Restaurant restaurant = snapshot.getValue(Restaurant.class);
-                    //checkFilter(restaurant);
-                    for(int i=0; i<11; i++) {
-                        if(btnIsChecked[i] && restaurant.filter.contains(filterCategory[i])) {
+        final String[] RestaurantCategory = {"전체","한식", "분식", "일식", "중국집", "양식", "치킨", "피자", "야식", "찜/탕", "패스트푸드", "세계음식"};
+        final Boolean[] btnIsChecked = {btn1_key, btn2_key, btn3_key, btn4_key, btn5_key, btn6_key ,btn7_key, btn8_key, btn9_key, btn10_key, btn11_key, btn12_key};
+        // 맛집
+        Log.e("필터링 분류", Integer.toString(filteringType));
+        switch (filteringType) {
+            case 0:
+                // 식당
+                mRestaurantReference = FirebaseDatabase.getInstance().getReference("Restaurants");
+                mRestaurantReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        restaurantsList.clear(); //초기화
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Restaurant restaurant = snapshot.getValue(Restaurant.class);
+                            //checkFilter(restaurant);
+                            for(int i=0; i<12; i++) {
+                                if(btnIsChecked[i] && restaurant.filter.contains(RestaurantCategory[i])) {
+                                    restaurantsList.add(restaurant);
+                                    MapPOIItem marker = new MapPOIItem();
+                                    MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(restaurant.getLatitude(),restaurant.getLongitude());
+                                    marker.setItemName(restaurant.getName());
+                                    marker.setTag(0);
+                                    marker.setMapPoint(mapPoint);
+                                    marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커타입을 커스텀 마커로 지정.
+                                    marker.setCustomImageResourceId(R.drawable.img_marker_off); // 마커 이미지.
+                                    marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
+                                    marker.setCustomSelectedImageResourceId(R.drawable.img_marker_on); // 마커를 클릭했을때
+                                    marker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
+                                    marker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
+                                    // marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                                    mMapView.addPOIItem(marker);
+                                    break;
+                                }
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                adapter = new RestaurantAdapter(restaurantsList, this);
+                recyclerView.setAdapter(adapter);
+                break;
+
+            case 1:
+                // 카페
+                mCafeReference = FirebaseDatabase.getInstance().getReference("Cafes");
+                mCafeReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        restaurantsList.clear(); //초기화
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Restaurant restaurant = snapshot.getValue(Restaurant.class);
                             restaurantsList.add(restaurant);
                             MapPOIItem marker = new MapPOIItem();
                             MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(restaurant.getLatitude(),restaurant.getLongitude());
@@ -177,31 +240,55 @@ public class MainActivity extends AppCompatActivity implements MapView.CurrentLo
                             marker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
                             // marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
                             mMapView.addPOIItem(marker);
-                            break;
                         }
+                        adapter.notifyDataSetChanged();
                     }
-                }
-                adapter.notifyDataSetChanged();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                    }
+                });
+                adapter = new CafeAdapter(restaurantsList, this);
+                recyclerView.setAdapter(adapter);
+                break;
 
-        adapter = new RestaurantAdapter(restaurantsList, this);
-        recyclerView.setAdapter(adapter);
+            case 2:
+                // 술집
+                /*mPubReference = FirebaseDatabase.getInstance().getReference("Pubs");
+                mPubReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        restaurantsList.clear(); //초기화
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Restaurant restaurant = snapshot.getValue(Restaurant.class);
+                            restaurantsList.add(restaurant);
+                            MapPOIItem marker = new MapPOIItem();
+                            MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(restaurant.getLatitude(),restaurant.getLongitude());
+                            marker.setItemName(restaurant.getName());
+                            marker.setTag(0);
+                            marker.setMapPoint(mapPoint);
+                            marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); // 마커타입을 커스텀 마커로 지정.
+                            marker.setCustomImageResourceId(R.drawable.img_marker_off); // 마커 이미지.
+                            marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
+                            marker.setCustomSelectedImageResourceId(R.drawable.img_marker_on); // 마커를 클릭했을때
+                            marker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
+                            marker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
+                            // marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                            mMapView.addPOIItem(marker);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
 
-        // Floating Button 구현
-        ImageView iv_filtering = (ImageView)findViewById(R.id.fb_filtering);
-        iv_filtering.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), FilteringActivity.class);
-                startActivity(intent);
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                adapter = new CafeAdapter(restaurantsList, this);
+                recyclerView.setAdapter(adapter);
+                break;*/
+        }
     }
 
 
